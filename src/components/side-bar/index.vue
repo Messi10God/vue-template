@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <a-menu @click="changeRoute" mode="inline">
+      <template v-for="item in menu" :key="item.name">
+        <a-menu-item v-if="!item.children" :key="item.name">
+          <span>{{ item.meta?.title }}</span>
+        </a-menu-item>
+        <a-sub-menu v-else>
+          <template #icon>
+            <MailOutlined />
+          </template>
+          <template #title>{{ item.meta?.title }}</template>
+          <a-menu-item v-for="child in item.children" :key="child.name">
+            <span>{{ child.meta?.title }}</span>
+          </a-menu-item>
+        </a-sub-menu>
+      </template>
+    </a-menu>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, computed } from "vue";
+import { routes } from "@/router/index";
+import { MailOutlined } from "@ant-design/icons-vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const menu = computed(() => {
+  return routes.filter((t) => t.name === "Layout")[0].children;
+});
+const changeRoute = ({ key }) => {
+  router.push({
+    name: key,
+  });
+};
+</script>
+
+<style scoped lang="less"></style>
