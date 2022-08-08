@@ -5,7 +5,7 @@
       <a-layout-sider width="200" style="background: #fff">
         <SideBar></SideBar
       ></a-layout-sider>
-      <a-layout>
+      <a-layout class="content">
         <a-layout-content>
           <router-view></router-view>
         </a-layout-content>
@@ -15,11 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import SideBar from "@/components/side-bar/index.vue";
+import SideBar from '@/components/side-bar/index.vue';
 </script>
 
 <style scoped lang="less">
 .main {
   height: 100vh;
+  .content {
+    overflow-y: auto;
+  }
 }
 </style>

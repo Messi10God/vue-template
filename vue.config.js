@@ -32,5 +32,8 @@ module.exports = defineConfig({
         "@": path.resolve("src"),
       },
     },
+    externals: {
+      echarts: 'echarts'
+    }
   },
 });
