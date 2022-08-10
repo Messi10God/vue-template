@@ -1,23 +1,29 @@
 <template>
   <div>
-    <Line></Line>
-    <VirtualList :list="list">
-      <template #default="{ item }">
-        <div style="text-align: center">{{ item }}</div>
-      </template>
-    </VirtualList>
+    <Line :option="option"></Line>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import VirtualList from '@/components/virtual-list/index.vue';
 import Line from '@/components/charts/line/index.vue';
+import { ref } from 'vue';
 
-const list = ref<string[]>([]);
-for (let i = 0; i < 100; i++) {
-  list.value?.push(i + '');
-}
+const option = ref({
+  xAxis: {
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+  },
+  yAxis: {
+    type: 'value',
+  },
+  series: [
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: 'line',
+      smooth: true,
+    },
+  ],
+});
 </script>
 
 <style scoped lang="less"></style>

@@ -22,21 +22,24 @@
 import { ref, computed, defineProps, defineEmits, PropType, watch } from 'vue';
 
 const props = defineProps({
+  /** 数据源 */
   list: {
     type: Array as PropType<string[]>,
     default: () => [],
   },
+  /** 子项的高度 */
   itemHeight: {
     type: Number,
     default: 100,
   },
+  /** 可视区域的高度 */
   containerHeight: {
     type: Number,
     default: 575,
   },
 });
 
-const emit = defineEmits(['toBottom']);
+const emit = defineEmits(['reachBottom']);
 const box = ref();
 
 const list = ref<string[]>(props.list);
@@ -85,8 +88,7 @@ const scrollHandle = () => {
 
   // 提前一个屏幕的距离判断是否滚动到底部
   if (list.value.length - showNum.value * 2 < startIndex.value) {
-    console.log(222);
-    emit('toBottom');
+    emit('reachBottom');
   }
 };
 
@@ -97,10 +99,6 @@ const onScroll = () => {
 
 <style scoped lang="less">
 .container {
-  border: 1px solid red;
   overflow-y: auto;
-  .item {
-    border-bottom: 1px solid black;
-  }
 }
 </style>

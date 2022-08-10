@@ -1,6 +1,10 @@
 <template>
   <div>
-    <a-menu @click="changeRoute" mode="inline">
+    <a-menu
+      @click="changeRoute"
+      mode="inline"
+      v-model:selectedKeys="selectedKeys"
+    >
       <template v-for="item in menu" :key="item.name">
         <a-menu-item v-if="!item.children" :key="item.name">
           <span>{{ item.meta?.title }}</span>
@@ -20,16 +24,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { routes } from "@/router/index";
-import { MailOutlined } from "@ant-design/icons-vue";
-import { useRouter } from "vue-router";
+import { ref, computed, watch } from 'vue';
+import { routes } from '@/router/index';
+import { MailOutlined } from '@ant-design/icons-vue';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 const menu = computed(() => {
-  return routes.filter((t) => t.name === "Layout")[0].children;
+  return routes.filter((t) => t.name === 'Layout')[0].children;
 });
-const changeRoute = ({ key }) => {
+
+const selectedKeys = ref<string[]>([]);
+
+/** 监听路由变化，设置选中项 */
+watch(
+  () => route.name,
+  (newRouteName) => {
+    if (typeof newRouteName === 'string') {
+      selectedKeys.value[0] = newRouteName;
+    } else {
+      selectedKeys.value = [];
+    }
+  },
+  {
+    immediate: true,
+  }
+);
+const changeRoute = ({ key }: { key: string }) => {
   router.push({
     name: key,
   });

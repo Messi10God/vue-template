@@ -5,8 +5,8 @@
       <a-layout-sider width="200" style="background: #fff">
         <SideBar></SideBar
       ></a-layout-sider>
-      <a-layout class="content">
-        <a-layout-content>
+      <a-layout>
+        <a-layout-content class="content">
           <router-view></router-view>
         </a-layout-content>
       </a-layout>
@@ -22,6 +22,9 @@ import SideBar from '@/components/side-bar/index.vue';
 .main {
   height: 100vh;
   .content {
+    margin: 20px;
+    // background: #fff;
+    // border-radius: 10px;
     overflow-y: auto;
   }
 }

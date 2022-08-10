@@ -35,6 +35,14 @@ export const routes: RouteRecordRaw[] = [
         },
         component: () => import('@/views/table/index.vue'),
       },
+      {
+        path: '/virtualList',
+        name: 'VirtualList',
+        meta: {
+          title: '虚拟表格',
+        },
+        component: () => import('@/views/virtual-list/index.vue'),
+      },
     ],
   },
 ];
