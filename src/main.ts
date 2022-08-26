@@ -10,4 +10,6 @@ const app = createApp(App);
 
 const pinia = createPinia();
 
+console.log(process.env.VUE_APP_TEXT);
+
 app.use(router).use(Antd).use(pinia).use(directives).mount('#app');

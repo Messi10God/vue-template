@@ -1,9 +1,17 @@
 <template>
   <div class="hello">
-    <div class="search">
-      <slot name="search"></slot>
-    </div>
-    <a-table v-bind="$attrs" :loading="loading" :dataSource="state.data">
+    <a-row class="search">
+      <a-col :span="20">
+        <slot name="search" :params="query"></slot>
+      </a-col>
+      <a-col class="operation" :span="4">
+        <a-space>
+          <a-button type="primary" @click="search">查询</a-button>
+          <a-button type="primary" @click="reset">清空</a-button>
+        </a-space>
+      </a-col>
+    </a-row>
+    <a-table v-bind="$attrs" :loading="state.loading" :dataSource="state.data">
       <template
         v-for="name of Object.keys($slots)"
         v-slot:[name]="args"
@@ -19,8 +27,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, defineProps } from 'vue';
+import { defineProps } from 'vue';
 import type { PropType } from 'vue';
+import { fetchByApi } from '@/hooks/useFetchByApi';
 
 const props = defineProps({
   api: {
@@ -33,28 +42,11 @@ const props = defineProps({
   },
 });
 
-const fetchByApi = () => {
-  const state = {
-    data: [],
-  };
-  const getList = async () => {
-    loading.value = true;
-    try {
-      const { data } = await props.api(props.query);
-      state.data = data;
-      loading.value = false;
-    } catch (error) {
-      loading.value = false;
-    }
-  };
-  getList();
-  return {
-    state,
-  };
+const search = () => {
+  reload();
 };
 
-const loading = ref<boolean>(true);
-const { state } = fetchByApi();
+const { state, reload, reset } = fetchByApi(props.api, props.query);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -75,8 +67,12 @@ a {
 }
 .search {
   background: #fff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  .operation {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 </style>
