@@ -2,7 +2,7 @@
   <div class="hello">
     <a-row class="search">
       <a-col :span="20">
-        <slot name="search" :params="query"></slot>
+        <slot name="search" :params="props.query"></slot>
       </a-col>
       <a-col class="operation" :span="4">
         <a-space>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps } from 'vue';
+import { defineProps, watch } from 'vue';
 import type { PropType } from 'vue';
 import { fetchByApi } from '@/hooks/useFetchByApi';
 
@@ -45,8 +45,16 @@ const props = defineProps({
 const search = () => {
   reload();
 };
-
 const { state, reload, reset } = fetchByApi(props.api, props.query);
+watch(
+  () => props.query,
+  (newQuery: any) => {
+    Object.assign(props.query, newQuery);
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

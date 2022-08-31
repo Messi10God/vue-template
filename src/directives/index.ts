@@ -12,7 +12,6 @@ export default {
   install(app: App) {
     directives.keys().forEach((directive) => {
       const directiveModule = directives(directive);
-      console.log(directiveModule.default);
       const directiveName: string = directive.replace(/\.\/(.+)\.ts$/g, '$1');
       if (directiveName !== 'index')
         app.directive(

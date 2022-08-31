@@ -6,12 +6,13 @@ type Api = (query?: RequestParam) => Promise<Response>;
 interface State<T = unknown> {
   data: T[];
   loading: boolean;
+  [key: string]: any;
 }
 interface PageInfo {
   pageIndex: number;
   pageSize: number;
 }
-interface RequestParam {
+export interface RequestParam {
   pageIndex: number;
   pageSize: number;
   [key: string]: unknown;
@@ -36,14 +37,14 @@ export function fetchByApi(
     data: [],
     loading: false,
   });
-  const params: RequestParam = Object.assign(query || {}, {
+  Object.assign(query, {
     pageIndex: options.pageIndex || defaultPageInfo.pageIndex,
     pageSize: options.pageSize || defaultPageInfo.pageSize,
   });
   const getList = async () => {
     state.loading = true;
     try {
-      const { data } = await api(params);
+      const { data } = await api(query);
       state.data = data;
       state.loading = false;
     } catch (error) {
@@ -58,8 +59,8 @@ export function fetchByApi(
     getList();
   };
   const setPageInfo = (pageInfo?: PageInfo) => {
-    params.pageIndex = pageInfo?.pageIndex || defaultPageInfo.pageIndex;
-    params.pageSize = pageInfo?.pageSize || defaultPageInfo.pageSize;
+    query.pageIndex = pageInfo?.pageIndex || defaultPageInfo.pageIndex;
+    query.pageSize = pageInfo?.pageSize || defaultPageInfo.pageSize;
   };
   const reset = () => {
     clearObj(query);

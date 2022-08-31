@@ -1,13 +1,13 @@
 <template>
   <div>
-    <Table :columns="columns" :api="api">
-      <template #search>
+    <Table :columns="columns" :query="query" :api="api">
+      <template #search="{ params }">
         <a-form layout="inline">
-          <a-form-item label="筛选1">
-            <a-input></a-input>
+          <a-form-item label="名字">
+            <a-input v-model:value="params.name"></a-input>
           </a-form-item>
-          <a-form-item label="筛选2">
-            <a-input></a-input>
+          <a-form-item label="年龄">
+            <a-input v-model:value="params.age"></a-input>
           </a-form-item>
         </a-form>
       </template>
@@ -25,7 +25,12 @@
 
 <script setup lang="ts">
 import Table from '@/components/table/index.vue';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
+
+const query = reactive({
+  name: undefined,
+  age: undefined,
+});
 
 const columns = ref([
   {
@@ -37,23 +42,29 @@ const columns = ref([
     dataIndex: 'age',
   },
 ]);
-const api = () => {
+const api = (params: any) => {
+  let data = [
+    {
+      name: '黄乘车你',
+      age: '27',
+    },
+    {
+      name: '小李',
+      age: '21',
+    },
+    {
+      name: '张三',
+      age: '53',
+    },
+  ];
+  if (params.age || params.name) {
+    data = data.filter(
+      (t) => t.age.includes(params.age) || t.name.includes(params.name)
+    );
+  }
   return Promise.resolve({
     code: 200,
-    data: [
-      {
-        name: '黄乘车你',
-        age: 27,
-      },
-      {
-        name: '小李',
-        age: 21,
-      },
-      {
-        name: '张三',
-        age: 53,
-      },
-    ],
+    data: data,
   });
 };
 </script>
