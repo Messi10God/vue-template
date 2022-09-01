@@ -1,12 +1,16 @@
-import { defineStore } from "pinia";
-export const tokenStore = defineStore("token", {
+import { defineStore } from 'pinia';
+export const tokenStore = defineStore('token', {
   state: () => ({
-    token: sessionStorage.getItem("token") as string,
+    token: sessionStorage.getItem('token') as string,
   }),
   actions: {
     addToken(val: string) {
-      sessionStorage.setItem("token", val);
+      sessionStorage.setItem('token', val);
       this.token = val;
+    },
+    clearToken() {
+      sessionStorage.removeItem('token');
+      this.token = '';
     },
   },
 });
