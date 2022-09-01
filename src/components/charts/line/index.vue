@@ -1,9 +1,9 @@
 <template>
-  <div id="line"></div>
+  <div :id="id" :style="{ width, height }"></div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineProps } from 'vue';
+import { onMounted, onUnmounted, defineProps } from 'vue';
 import * as echarts from 'echarts';
 
 let line;
@@ -14,23 +14,39 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  id: {
+    type: String,
+    required: true,
+  },
+  width: {
+    type: String,
+    default: '100%',
+  },
+  height: {
+    type: String,
+    default: '400px',
+  },
 });
 
 const initChart = () => {
   if (!chart) {
-    line = document.getElementById('line');
+    line = document.getElementById(props.id);
     chart = echarts.init(line);
   }
   chart.setOption(props.option);
 };
+
+const resize = () => {
+  chart?.resize();
+};
 onMounted(() => {
   initChart();
+
+  window.addEventListener('resize', resize);
+});
+onUnmounted(() => {
+  window.removeEventListener('resize', resize);
 });
 </script>
 
-<style scoped lang="less">
-#line {
-  height: 400px;
-  width: 100%;
-}
-</style>
+<style scoped lang="less"></style>

@@ -4,12 +4,7 @@
       <Header></Header>
     </a-layout-header>
     <a-layout>
-      <a-layout-sider
-        width="200"
-        style="background: #fff"
-        :trigger="null"
-        collapsible
-      >
+      <a-layout-sider width="200" style="background: #fff" collapsible>
         <SideBar></SideBar
       ></a-layout-sider>
       <a-layout>
@@ -34,6 +29,7 @@ import Header from '@/components/header/index.vue';
     // background: #fff;
     // border-radius: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
   }
 }
 </style>

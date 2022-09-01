@@ -30,3 +30,8 @@ export function isObjEqual(obj1: AnyObject, obj2: AnyObject) {
     return true;
   }
 }
+
+/** 数字转成千分制 */
+export function formatNumber(num: string | number) {
+  return num.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,');
+}
