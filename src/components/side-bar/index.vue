@@ -1,26 +1,25 @@
 <template>
-  <div>
-    <a-menu
-      @click="changeRoute"
-      mode="inline"
-      v-model:selectedKeys="selectedKeys"
-    >
-      <template v-for="item in menu" :key="item.name">
-        <a-menu-item v-if="!item.children" :key="item.name">
+  <a-menu
+    @click="changeRoute"
+    mode="inline"
+    v-model:selectedKeys="selectedKeys"
+  >
+    <template v-for="item in menu" :key="item.name">
+      <a-menu-item v-if="!item.children" :key="item.name">
+        <MailOutlined />
+        <span>{{ item.meta?.title }}</span>
+      </a-menu-item>
+      <a-sub-menu v-else>
+        <template #title>
+          <MailOutlined />
           <span>{{ item.meta?.title }}</span>
+        </template>
+        <a-menu-item v-for="child in item.children" :key="child.name">
+          <span>{{ child.meta?.title }}</span>
         </a-menu-item>
-        <a-sub-menu v-else>
-          <template #icon>
-            <MailOutlined />
-          </template>
-          <template #title>{{ item.meta?.title }}</template>
-          <a-menu-item v-for="child in item.children" :key="child.name">
-            <span>{{ child.meta?.title }}</span>
-          </a-menu-item>
-        </a-sub-menu>
-      </template>
-    </a-menu>
-  </div>
+      </a-sub-menu>
+    </template>
+  </a-menu>
 </template>
 
 <script setup lang="ts">

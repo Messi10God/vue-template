@@ -4,7 +4,13 @@
       <Header></Header>
     </a-layout-header>
     <a-layout>
-      <a-layout-sider width="200" style="background: #fff" collapsible>
+      <a-layout-sider
+        width="200"
+        style="background: #fff"
+        v-model:collapsed="themeConfig.collapsed"
+        :trigger="null"
+        collapsible
+      >
         <SideBar></SideBar
       ></a-layout-sider>
       <a-layout>
@@ -19,6 +25,10 @@
 <script setup lang="ts">
 import SideBar from '@/components/side-bar/index.vue';
 import Header from '@/components/header/index.vue';
+import { storeToRefs } from 'pinia';
+import { useThemeConfig } from '@/store/themeConfig';
+
+const { themeConfig } = storeToRefs(useThemeConfig());
 </script>
 
 <style scoped lang="less">
