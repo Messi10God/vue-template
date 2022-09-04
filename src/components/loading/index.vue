@@ -1,11 +1,14 @@
 <template>
   <div class="loading-container" @click.stop>
-    <div>{{ props.text }}</div>
+    <LoadingOutlined style="font-size: 22px" />
+    <div class="loading-text">{{ props.text }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { defineProps } from 'vue';
+import { LoadingOutlined } from '@ant-design/icons-vue';
+
 const props = defineProps({
   text: {
     type: String,
@@ -23,7 +26,13 @@ const props = defineProps({
   left: 0;
   top: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  color: #1890ff;
+  .loading-text {
+    margin-top: 10px;
+    font-size: 16px;
+  }
 }
 </style>
