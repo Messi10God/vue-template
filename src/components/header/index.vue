@@ -7,6 +7,7 @@
       <a-col>
         <a-space :size="20" class="right">
           <Collapsed></Collapsed>
+          <FullScreen></FullScreen>
           <a-dropdown>
             <div class="avatar">
               <a-space>
@@ -38,6 +39,7 @@ import type { MenuProps } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 import { tokenStore } from '@/store/token';
 import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
+import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
 
 const { clearToken } = tokenStore();
 const router = useRouter();
