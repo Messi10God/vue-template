@@ -15,12 +15,15 @@
                   class="avatar-icon"
                   src="https://img1.baidu.com/it/u=2116210995,3117384250&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1662138000&t=10d9f2b9f3563e8f9b4cdfaedee1ebd3"
                 />
-                <span class="avatar-name">管理员</span>
+                <span class="avatar-name">黄琛</span>
                 <DownOutlined />
               </a-space>
             </div>
             <template #overlay>
               <a-menu @click="selectMenu">
+                <a-menu-item :key="UserOpeartion.USER_INFO"
+                  >修改信息</a-menu-item
+                >
                 <a-menu-item :key="UserOpeartion.LOGIN_OUT"
                   >退出登录</a-menu-item
                 >
@@ -30,27 +33,35 @@
         </a-space>
       </a-col>
     </a-row>
+    <UserInfo ref="userInfo"></UserInfo>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { DownOutlined } from '@ant-design/icons-vue';
 import type { MenuProps } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 import { tokenStore } from '@/store/token';
 import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
 import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
+import UserInfo from '@/components/header/header-toolbar/UserInfo.vue';
+import type UserInfoType from '@/components/header/header-toolbar/UserInfo.vue';
 
 const { clearToken } = tokenStore();
 const router = useRouter();
 const enum UserOpeartion {
-  LOGIN_OUT = '1',
+  USER_INFO = '1',
+  LOGIN_OUT = '2',
 }
 
+const userInfo = ref<InstanceType<typeof UserInfoType>>();
 const selectMenu: MenuProps['onClick'] = ({ key }) => {
   if (key === UserOpeartion.LOGIN_OUT) {
     clearToken();
     router.replace('/login');
+  } else if (key === UserOpeartion.USER_INFO) {
+    userInfo.value?.showModal();
   }
 };
 </script>
