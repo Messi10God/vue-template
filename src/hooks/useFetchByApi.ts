@@ -1,16 +1,17 @@
-import { Response } from '@/api/typing';
+import { TableResponse } from '@/api/typing';
 import { clearObj } from '@/utils';
 import { reactive } from 'vue';
-type Api = (query?: RequestParam) => Promise<Response>;
+type Api = (query?: RequestParam) => Promise<TableResponse>;
 
 interface State<T = unknown> {
   data: T[];
   loading: boolean;
   [key: string]: any;
 }
-interface PageInfo {
+export interface PageInfo {
   pageIndex: number;
   pageSize: number;
+  total?: number;
 }
 export interface RequestParam {
   pageIndex: number;
@@ -25,7 +26,8 @@ interface Options {
 
 const defaultPageInfo: PageInfo = {
   pageIndex: 1,
-  pageSize: 20,
+  total: 0,
+  pageSize: 5,
 };
 
 export function fetchByApi(
@@ -36,16 +38,22 @@ export function fetchByApi(
   const state = reactive<State>({
     data: [],
     loading: false,
+    ...defaultPageInfo,
   });
-  Object.assign(query, {
-    pageIndex: options.pageIndex || defaultPageInfo.pageIndex,
-    pageSize: options.pageSize || defaultPageInfo.pageSize,
-  });
+
   const getList = async () => {
     state.loading = true;
+    const params = Object.assign({}, query, {
+      pageIndex:
+        query.pageIndex || options.pageIndex || defaultPageInfo.pageIndex,
+      pageSize: query.pageSize || options.pageSize || defaultPageInfo.pageSize,
+    });
     try {
-      const { data } = await api(query);
+      const { data, total, pageIndex, pageSize } = await api(params);
       state.data = data;
+      state.total = total;
+      state.pageIndex = pageIndex;
+      state.pageSize = pageSize;
       state.loading = false;
     } catch (error) {
       state.loading = false;

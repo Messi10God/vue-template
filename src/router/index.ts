@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Layout from '@/components/layout/index.vue';
+import { RouterView } from 'vue-router';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -28,18 +29,36 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/index.vue'),
       },
       {
-        path: '/table',
+        path: '',
         name: 'Table',
         meta: {
           title: '表格',
         },
-        component: () => import('@/views/table/index.vue'),
+        component: RouterView,
+        children: [
+          {
+            path: '/normalTable',
+            name: 'NormalTable',
+            meta: {
+              title: '普通表格',
+            },
+            component: () => import('@/views/table/normal-table/index.vue'),
+          },
+          {
+            path: '/selectTable',
+            name: 'SelectTable',
+            meta: {
+              title: '选择表格',
+            },
+            component: () => import('@/views/table/select-table/index.vue'),
+          },
+        ],
       },
       {
         path: '/virtualList',
         name: 'VirtualList',
         meta: {
-          title: '虚拟表格',
+          title: '虚拟列表',
         },
         component: () => import('@/views/virtual-list/index.vue'),
       },

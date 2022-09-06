@@ -11,7 +11,30 @@
         </a-space>
       </a-col>
     </a-row>
-    <a-table v-bind="$attrs" :loading="state.loading" :dataSource="state.data">
+    <a-row class="tool">
+      <a-col :span="12">
+        <slot name="toolbox"></slot>
+      </a-col>
+      <a-col :span="12" class="tool-right">
+        <a-button v-if="showExport" type="primary" @click="exportExcel"
+          >导出</a-button
+        >
+      </a-col>
+    </a-row>
+    <a-table
+      v-bind="$attrs"
+      :loading="state.loading"
+      :dataSource="state.data"
+      :pagination="{
+        current: state.pageIndex,
+        pageSize: state.pageSize,
+        total: state.total,
+        pageSizeOptions: ['5', '10', '20', '40'],
+        showSizeChanger: true,
+      }"
+      @change="pageIndexChange"
+      :row-selection="selection ? rowSelection : undefined"
+    >
       <template
         v-for="name of Object.keys($slots)"
         v-slot:[name]="args"
@@ -27,10 +50,9 @@
 </template>
 
 <script lang="ts" setup>
-import { defineProps, watch } from 'vue';
+import { ref, defineProps, defineEmits, defineExpose, watch } from 'vue';
 import type { PropType } from 'vue';
 import { fetchByApi } from '@/hooks/useFetchByApi';
-
 const props = defineProps({
   api: {
     type: Function as PropType<(params?: any) => Promise<any>>,
@@ -40,12 +62,30 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
+  selection: {
+    type: Boolean,
+    default: false,
+  },
+  showExport: {
+    type: Boolean,
+    default: false,
+  },
 });
+
+const emit = defineEmits([
+  'onSelectRowsChange',
+  'onSelectKeysChange',
+  'clearSelect',
+  'exportExcel',
+]);
 
 const search = () => {
   reload();
 };
-const { state, reload, reset } = fetchByApi(props.api, props.query);
+const { state, reload, reset, setPageInfo } = fetchByApi(
+  props.api,
+  props.query
+);
 watch(
   () => props.query,
   (newQuery: any) => {
@@ -55,6 +95,40 @@ watch(
     deep: true,
   }
 );
+
+/** 选择项 */
+const selectedRowKeysRef = ref<string[]>([]);
+const selectedRowsRef = ref<string[]>([]);
+const rowSelection = {
+  selectedRowKeys: selectedRowKeysRef,
+  onChange: (selectedRowKeys: string[], selectedRows) => {
+    selectedRowKeysRef.value = selectedRowKeys;
+    selectedRowsRef.value = selectedRows;
+    emit('onSelectKeysChange', selectedRowKeys);
+    emit('onSelectRowsChange', selectedRows);
+  },
+};
+const clearSelect = () => {
+  selectedRowKeysRef.value = [];
+  selectedRowsRef.value = [];
+  emit('clearSelect');
+};
+
+/** 分页 */
+/** 当前页码切换 */
+const pageIndexChange = (pageInfo) => {
+  setPageInfo({ pageSize: pageInfo.pageSize, pageIndex: pageInfo.current });
+  reload();
+};
+
+/** 导出excel */
+const exportExcel = () => {
+  emit('exportExcel', selectedRowsRef.value);
+};
+
+defineExpose({
+  clearSelect,
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -81,6 +155,13 @@ a {
   .operation {
     display: flex;
     justify-content: flex-end;
+  }
+}
+.tool {
+  background: #fff;
+  padding: 15px 20px;
+  .tool-right {
+    text-align: right;
   }
 }
 </style>
