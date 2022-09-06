@@ -8,6 +8,7 @@
         <a-space :size="20" class="right">
           <Collapsed></Collapsed>
           <FullScreen></FullScreen>
+          <CodeCore></CodeCore>
           <a-dropdown>
             <div class="avatar">
               <a-space>
@@ -45,6 +46,7 @@ import { useRouter } from 'vue-router';
 import { tokenStore } from '@/store/token';
 import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
 import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
+import CodeCore from '@/components/header/header-toolbar/CodeCore.vue';
 import UserInfo from '@/components/header/header-toolbar/UserInfo.vue';
 import type UserInfoType from '@/components/header/header-toolbar/UserInfo.vue';
 
