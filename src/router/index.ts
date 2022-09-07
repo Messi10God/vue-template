@@ -38,7 +38,7 @@ export const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '/normalTable',
-            name: 'NormalTable',
+            name: 'Table.NormalTable',
             meta: {
               title: '普通表格',
             },
@@ -46,7 +46,7 @@ export const routes: RouteRecordRaw[] = [
           },
           {
             path: '/selectTable',
-            name: 'SelectTable',
+            name: 'Table.SelectTable',
             meta: {
               title: '选择表格',
             },
