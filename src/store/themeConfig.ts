@@ -2,10 +2,14 @@ import { defineStore } from 'pinia';
 
 export interface Config {
   collapsed: boolean;
+  sideBarWidth: number;
+  headerHeight: number;
 }
 
 const defaultConfig: Config = {
   collapsed: false,
+  sideBarWidth: 200,
+  headerHeight: 64,
 };
 export const useThemeConfig = defineStore('themeConfig', {
   state: () => ({
@@ -14,7 +18,7 @@ export const useThemeConfig = defineStore('themeConfig', {
       : defaultConfig,
   }),
   actions: {
-    setConfig(config: Config) {
+    setConfig(config: Partial<Config>) {
       this.themeConfig = { ...this.themeConfig, ...config };
       sessionStorage.setItem('themeConfig', JSON.stringify(this.themeConfig));
     },

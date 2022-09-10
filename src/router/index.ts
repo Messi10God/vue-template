@@ -16,9 +16,10 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/login/index.vue'),
   },
   {
-    path: '/home',
+    path: '/',
     name: 'Layout',
     component: Layout,
+    redirect: '/home',
     children: [
       {
         path: '/home',

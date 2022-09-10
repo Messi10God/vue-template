@@ -31,22 +31,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { login, Login } from "@/api/login";
-import { tokenStore } from "@/store/token";
-import { message } from "ant-design-vue";
-import { useForm } from "ant-design-vue/lib/form";
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { login, Login } from '@/api/login';
+import { tokenStore } from '@/store/token';
+import { message } from 'ant-design-vue';
+import { useForm } from 'ant-design-vue/lib/form';
 
 const router = useRouter();
 const { addToken } = tokenStore();
 const user = ref<Login>({
-  userName: "",
-  password: "",
+  userName: '',
+  password: '',
 });
 const rules = {
-  userName: [{ required: true, message: "请输入用户名" }],
-  password: [{ required: true, message: "请输入密码" }],
+  userName: [{ required: true, message: '请输入用户名' }],
+  password: [{ required: true, message: '请输入密码' }],
 };
 const { validate, validateInfos } = useForm(user, rules);
 const beforeLogin = () => {
@@ -58,10 +58,10 @@ const handleLogin = async () => {
   const { code, data } = await login(user.value);
   if (code === 200) {
     addToken(data.token);
-    message.success("登录成功");
-    router.push("/home");
+    message.success('登录成功');
+    router.push('/home');
   } else {
-    message.error("账号或密码错误");
+    message.error('账号或密码错误');
   }
 };
 </script>
