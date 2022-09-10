@@ -99,6 +99,11 @@ const closeOtherTag = (tag: Tag) => {
   toLastTag();
 };
 
+const closeAllTag = () => {
+  routeTags.clearAll();
+  toLastTag();
+};
+
 const visible = ref<boolean>(false);
 const data = ref([
   {
@@ -111,9 +116,7 @@ const data = ref([
   },
   {
     title: '关闭所有标签',
-    event: () => {
-      routeTags.clearAll();
-    },
+    event: () => closeAllTag(),
   },
 ]);
 
