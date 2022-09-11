@@ -34,7 +34,7 @@ const form = ref({
   address: '深圳',
 });
 
-const rules = {
+const rules = ref({
   name: [
     {
       required: true,
@@ -47,7 +47,7 @@ const rules = {
       message: '请输入年龄',
     },
   ],
-};
+});
 const { resetFields, validate, validateInfos } = useForm(form, rules);
 
 const loading = ref<boolean>(false);
