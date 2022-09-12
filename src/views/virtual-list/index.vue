@@ -20,8 +20,9 @@ for (let i = 0; i < 100; i++) {
 
 <style scoped lang="less">
 .list {
-  width: 70%;
+  width: 100%;
   margin: 10px auto;
+  background: #fff;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.04),
