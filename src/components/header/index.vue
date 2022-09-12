@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <a-row justify="space-between">
+    <a-row class="header" justify="space-between" align="middle">
       <a-col class="left logo-box">
         <img src="@/assets/logo.png" />
       </a-col>
@@ -8,6 +8,7 @@
         <a-space :size="20" class="right">
           <Collapsed></Collapsed>
           <FullScreen></FullScreen>
+          <Setting></Setting>
           <CodeCore></CodeCore>
           <a-dropdown>
             <div class="avatar">
@@ -47,6 +48,7 @@ import { tokenStore } from '@/store/token';
 import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
 import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
 import CodeCore from '@/components/header/header-toolbar/CodeCore.vue';
+import Setting from '@/components/header/header-toolbar/Setting.vue';
 import UserInfo from '@/components/header/header-toolbar/UserInfo.vue';
 import type UserInfoType from '@/components/header/header-toolbar/UserInfo.vue';
 
@@ -70,6 +72,7 @@ const selectMenu: MenuProps['onClick'] = ({ key }) => {
 
 <style scoped lang="less">
 .header {
+  height: 100%;
   .logo-box {
     width: 200px;
     img {

@@ -1,6 +1,9 @@
 <template>
   <a-layout class="main">
-    <a-layout-header class="header" :height="themeConfig.headerHeight">
+    <a-layout-header
+      class="header"
+      :style="{ height: themeConfig.headerHeight + 'px' }"
+    >
       <Header></Header>
     </a-layout-header>
     <a-layout>
