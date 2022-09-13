@@ -18,6 +18,7 @@
       ></a-layout-sider>
       <a-layout>
         <PageTags></PageTags>
+        <Breadcrumb></Breadcrumb>
         <a-layout-content class="content">
           <router-view></router-view>
         </a-layout-content>
@@ -30,6 +31,7 @@
 import SideBar from '@/components/side-bar/index.vue';
 import Header from '@/components/header/index.vue';
 import PageTags from '@/components/page-tags/index.vue';
+import Breadcrumb from '@/components/breadcrumb/index.vue';
 import { storeToRefs } from 'pinia';
 import { useThemeConfig } from '@/store/themeConfig';
 
@@ -43,7 +45,7 @@ const { themeConfig } = storeToRefs(useThemeConfig());
     background: #fff;
   }
   .content {
-    margin: 20px;
+    margin: 10px 20px;
     // background: #fff;
     // border-radius: 10px;
     overflow-y: auto;

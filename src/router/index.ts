@@ -16,7 +16,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/login/index.vue'),
   },
   {
-    path: '/',
+    path: '',
     name: 'Layout',
     component: Layout,
     redirect: '/home',
@@ -30,15 +30,16 @@ export const routes: RouteRecordRaw[] = [
         component: () => import('@/views/home/index.vue'),
       },
       {
-        path: '',
+        path: '/table',
         name: 'Table',
+        redirect: '/table/normalTable',
         meta: {
           title: '表格',
         },
         component: RouterView,
         children: [
           {
-            path: '/normalTable',
+            path: '/table/normalTable',
             name: 'Table.NormalTable',
             meta: {
               title: '普通表格',
@@ -46,7 +47,7 @@ export const routes: RouteRecordRaw[] = [
             component: () => import('@/views/table/normal-table/index.vue'),
           },
           {
-            path: '/selectTable',
+            path: '/table/selectTable',
             name: 'Table.SelectTable',
             meta: {
               title: '选择表格',
