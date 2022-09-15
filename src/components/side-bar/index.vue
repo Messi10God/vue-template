@@ -17,9 +17,12 @@
             <MailOutlined />
             <span>{{ item.meta?.title }}</span>
           </template>
-          <a-menu-item v-for="child in item.children" :key="child.name">
-            <span>{{ child.meta?.title }}</span>
-          </a-menu-item>
+          <template v-for="child in item.children" :key="child.name">
+            <!-- 不显示hidden的路由 -->
+            <a-menu-item v-if="!child.meta?.hidden" :key="child.name">
+              <span>{{ child.meta?.title }}</span>
+            </a-menu-item>
+          </template>
         </a-sub-menu>
       </template>
     </template>
@@ -55,20 +58,37 @@ const initOpenKeys = () => {
 initOpenKeys();
 
 const openChange = (keys: string[]) => {
-  console.log(keys);
   openKeys.value = keys;
+};
+
+const setSelectedKeys = (newRoute, oldRoute) => {
+  /** 如果旧路由存在，则是由左侧菜单跳转 */
+  if (oldRoute) {
+    if (newRoute.name.includes(oldRoute.name)) {
+      selectedKeys.value[0] = oldRoute.name;
+    } else {
+      selectedKeys.value[0] = newRoute.name;
+    }
+  } else {
+    /** 如果跳转到不展示在左侧菜单栏的页面，则选中该页面的上级页面 */
+    if (newRoute.meta.hidden) {
+      selectedKeys.value[0] = newRoute.name.slice(
+        0,
+        newRoute.name.lastIndexOf('.')
+      );
+    } else {
+      selectedKeys.value[0] = newRoute.name;
+    }
+  }
 };
 /** 监听路由变化，设置选中项 */
 watch(
-  () => route.name,
-  (newRouteName) => {
-    if (typeof newRouteName === 'string') {
-      selectedKeys.value[0] = newRouteName;
-    } else {
-      selectedKeys.value = [];
-    }
+  () => route,
+  (newRoute, oldRoute) => {
+    setSelectedKeys(newRoute, oldRoute);
   },
   {
+    deep: true,
     immediate: true,
   }
 );

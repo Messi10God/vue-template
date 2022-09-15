@@ -1,12 +1,13 @@
 <template>
   <div class="breadcrumb">
-    <a-breadcrumb :routes="breadcrumbRoutes">
+    <a-breadcrumb :routes="breadcrumbRoutes" separator=">">
       <template #itemRender="{ route, paths }">
+        <!-- <span>{{ paths }}</span> -->
         <span v-if="!route.allowJump">
-          {{ route.name }}
+          {{ route.meta.title }}
         </span>
-        <router-link v-else :to="`/${paths.join('/')}`">
-          {{ route.name }}
+        <router-link v-else :to="`/${paths.pop()}`">
+          {{ route.meta.title }}
         </router-link>
       </template>
     </a-breadcrumb>
@@ -15,31 +16,43 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 interface BreadcrumbRoute {
-  name: string;
+  meta: any;
   path: string;
   /** 是否允许点击跳转 */
   allowJump: boolean;
 }
 
 const route = useRoute();
-console.log(route.matched);
+const router = useRouter();
+
+const routes = router.getRoutes();
 const breadcrumbRoutes = ref<BreadcrumbRoute[]>([]);
+
+const initRoutes = () => {
+  breadcrumbRoutes.value = [];
+  /** 获取当前路由的上级路由path数组，去掉第一个/是为了除去空数组，因为path以/开头 */
+  const pathArr = route.path.slice(1).split('/');
+  let path = '';
+  for (let item of pathArr) {
+    path = path + '/' + item;
+    let breadcrumbRoute = routes.find((t) => t.path === path)!;
+    const obj: BreadcrumbRoute = {
+      meta: breadcrumbRoute.meta,
+      path: breadcrumbRoute.path,
+      allowJump: !breadcrumbRoute.meta.hideInBreadcrumb,
+    };
+    breadcrumbRoutes.value.push(obj);
+  }
+};
 
 /** 监听路由变化，重新获取面包屑数据 */
 watch(
   route,
   () => {
-    /** 使用matched来生成面包屑数据，路由配置的地址必须要有层级关系，一级菜单是/table，二级菜单必须为/table/xxx */
-    breadcrumbRoutes.value = route.matched.map((t, i, routeMatchs) => ({
-      name: t.meta.title as string,
-      path: t.path,
-      /** 允许点击跳转的判断，非最后一个且path有路径 */
-      allowJump: i < routeMatchs.length - 1 && !['', '/'].includes(t.path),
-    }));
-    breadcrumbRoutes.value.shift();
+    initRoutes();
   },
   {
     immediate: true,

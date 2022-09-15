@@ -4,7 +4,7 @@ import { RouterView } from 'vue-router';
 
 export const routes: RouteRecordRaw[] = [
   {
-    path: '/',
+    path: '',
     redirect: '/login',
   },
   {
@@ -16,7 +16,7 @@ export const routes: RouteRecordRaw[] = [
     component: () => import('@/views/login/index.vue'),
   },
   {
-    path: '',
+    path: '/',
     name: 'Layout',
     component: Layout,
     redirect: '/home',
@@ -53,6 +53,15 @@ export const routes: RouteRecordRaw[] = [
               title: '选择表格',
             },
             component: () => import('@/views/table/select-table/index.vue'),
+          },
+          {
+            path: '/table/selectTable/add',
+            name: 'Table.SelectTable.Add',
+            meta: {
+              hidden: true,
+              title: '新增',
+            },
+            component: () => import('@/views/table/select-table/add/index.vue'),
           },
         ],
       },

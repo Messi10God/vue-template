@@ -19,6 +19,9 @@
           </a-form-item>
         </a-form>
       </template>
+      <template #toolbox>
+        <a-button @click="doAdd">新增</a-button>
+      </template>
       <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'name'">
           <a-tag>{{ record.name }}</a-tag>
@@ -34,6 +37,7 @@
 <script setup lang="ts">
 import Table from '@/components/table/index.vue';
 import { ref, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
 const query = reactive({
   name: undefined,
@@ -103,6 +107,11 @@ const api = (params: any) => {
 
 const onSelectRowsChange = (selectedRows) => {
   console.log(selectedRows);
+};
+
+const router = useRouter();
+const doAdd = () => {
+  router.push('/table/selectTable/add');
 };
 </script>
 
