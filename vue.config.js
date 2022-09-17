@@ -36,4 +36,21 @@ module.exports = defineConfig({
       echarts: 'echarts'
     }
   },
+  chainWebpack(config) {
+    config.module
+      .rule('svg')
+      .exclude.add(path.resolve('src/assets/svg')) // 排除掉其他loader对svg处理
+      .end()
+    config.module
+      .rule('icons')
+      .test(/\.svg$/)
+      .include.add(path.resolve('src/assets/svg'))
+      .end()
+      .use('svg-sprite-loader')
+      .loader('svg-sprite-loader')
+      .options({
+        symbolId: 'icon-[name]'
+      })
+      .end()
+  }
 });
