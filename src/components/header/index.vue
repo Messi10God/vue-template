@@ -9,6 +9,7 @@
           <Collapsed></Collapsed>
           <FullScreen></FullScreen>
           <Setting></Setting>
+          <SwitchLang></SwitchLang>
           <CodeCore></CodeCore>
           <a-dropdown>
             <div class="avatar">
@@ -49,6 +50,7 @@ import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
 import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
 import CodeCore from '@/components/header/header-toolbar/CodeCore.vue';
 import Setting from '@/components/header/header-toolbar/Setting.vue';
+import SwitchLang from '@/components/header/header-toolbar/SwitchLang.vue';
 import UserInfo from '@/components/header/header-toolbar/UserInfo.vue';
 import type UserInfoType from '@/components/header/header-toolbar/UserInfo.vue';
 

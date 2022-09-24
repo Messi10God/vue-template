@@ -1,16 +1,7 @@
 import { defineStore } from 'pinia';
+import { defaultConfig } from '@/store/configs';
+import type { Config } from '@/store/configs';
 
-export interface Config {
-  collapsed: boolean;
-  sideBarWidth: number;
-  headerHeight: number;
-}
-
-const defaultConfig: Config = {
-  collapsed: false,
-  sideBarWidth: 200,
-  headerHeight: 64,
-};
 export const useThemeConfig = defineStore('themeConfig', {
   state: () => ({
     themeConfig: sessionStorage.getItem('themeConfig')

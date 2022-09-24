@@ -6,8 +6,12 @@
       </a-col>
       <a-col class="operation" :span="4">
         <a-space>
-          <a-button type="primary" @click="search">查询</a-button>
-          <a-button type="primary" @click="reset">清空</a-button>
+          <a-button type="primary" @click="search">{{
+            t('action.search')
+          }}</a-button>
+          <a-button type="primary" @click="reset">{{
+            t('action.reset')
+          }}</a-button>
         </a-space>
       </a-col>
     </a-row>
@@ -16,9 +20,9 @@
         <slot name="toolbox"></slot>
       </a-col>
       <a-col :span="12" class="tool-right">
-        <a-button v-if="showExport" type="primary" @click="exportExcel"
-          >导出</a-button
-        >
+        <a-button v-if="showExport" type="primary" @click="exportExcel">{{
+          t('action.export')
+        }}</a-button>
       </a-col>
     </a-row>
     <a-table
@@ -53,6 +57,9 @@
 import { ref, defineProps, defineEmits, defineExpose, watch } from 'vue';
 import type { PropType } from 'vue';
 import { fetchByApi } from '@/hooks/useFetchByApi';
+import i18n from '@/locales';
+
+const { t } = i18n.global;
 const props = defineProps({
   api: {
     type: Function as PropType<(params?: any) => Promise<any>>,

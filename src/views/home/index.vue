@@ -6,7 +6,7 @@
           <div class="card-title">
             <a-space>
               <UserOutlined />
-              用户数量
+              {{ t('home.userQuantity') }}
             </a-space>
           </div>
           <div class="card-content">
@@ -19,7 +19,7 @@
           <div class="card-title card-title-blue">
             <a-space>
               <UserOutlined />
-              访问数量
+              {{ t('home.visitQuantity') }}
             </a-space>
           </div>
           <div class="card-content">
@@ -32,7 +32,7 @@
           <div class="card-title card-title-green">
             <a-space>
               <UserOutlined />
-              停车数量
+              {{ t('home.parkQuantity') }}
             </a-space>
           </div>
           <div class="card-content">
@@ -62,6 +62,9 @@ import Line from '@/components/charts/line/index.vue';
 import CountTo from '@/components/count-to/index.vue';
 import { ref } from 'vue';
 import { UserOutlined } from '@ant-design/icons-vue';
+import i18n from '@/locales';
+
+const { t } = i18n.global;
 
 const option = ref({
   xAxis: {

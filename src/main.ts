@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from '@/router';
+import i18n from '@/locales';
 import { createPinia } from 'pinia';
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
@@ -21,4 +22,4 @@ const pinia = createPinia();
 
 console.log(process.env.VUE_APP_TEXT);
 
-app.use(pinia).use(router).use(Antd).use(directives).mount('#app');
+app.use(pinia).use(router).use(Antd).use(i18n).use(directives).mount('#app');
