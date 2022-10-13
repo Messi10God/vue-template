@@ -2,6 +2,10 @@ const path = require("path");
 const { defineConfig } = require("@vue/cli-service");
 
 module.exports = defineConfig({
+  devServer: {
+    host: '0.0.0.0',
+    setupMiddlewares: require('./mock/mock-server')
+  },
   pages: {
     index: {
       // page 的入口

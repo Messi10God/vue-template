@@ -52,6 +52,7 @@ export function fetchByApi(
       const { data, total, pageIndex, pageSize } = await api(params);
       state.data = data;
       state.total = total;
+      /** 为了改变page组件的属性 */
       state.pageIndex = pageIndex;
       state.pageSize = pageSize;
       state.loading = false;
