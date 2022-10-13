@@ -6,8 +6,9 @@
         <a-form-item v-bind="validateInfos.userName">
           <div class="input-box">
             <a-input
-              placeholder="请输入用户名"
+              placeholder="admin"
               v-model:value="user.userName"
+              aria-autocomplete="off"
               :bordered="false"
             ></a-input>
           </div>
@@ -15,8 +16,9 @@
         <a-form-item v-bind="validateInfos.password">
           <div class="input-box">
             <a-input-password
-              placeholder="请输入密码"
+              placeholder="12345"
               v-model:value="user.password"
+              aria-autocomplete="off"
               :bordered="false"
             ></a-input-password>
           </div>
@@ -55,8 +57,8 @@ const beforeLogin = () => {
   });
 };
 const handleLogin = async () => {
-  const { code, data } = await login(user.value);
-  if (code === 200) {
+  const { success, data } = await login(user.value);
+  if (success) {
     addToken(data.token);
     message.success('登录成功');
     router.push('/home');

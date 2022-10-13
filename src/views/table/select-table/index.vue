@@ -5,7 +5,7 @@
       row-key="id"
       :columns="columns"
       :query="query"
-      :api="api"
+      :api="getUsers"
       @onSelectRowsChange="onSelectRowsChange"
       :showExport="true"
     >
@@ -38,6 +38,7 @@
 import Table from '@/components/table/index.vue';
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import { getUsers } from '@/api/table';
 
 const query = reactive({
   name: undefined,
@@ -54,56 +55,6 @@ const columns = ref([
     dataIndex: 'age',
   },
 ]);
-const api = (params: any) => {
-  let data = [
-    {
-      id: '1',
-      name: '黄乘车你',
-      age: '27',
-    },
-    {
-      id: '2',
-      name: '小吖',
-      age: '21',
-    },
-    {
-      id: '3',
-      name: '张三',
-      age: '53',
-    },
-    {
-      id: '4',
-      name: '李四',
-      age: '53',
-    },
-    {
-      id: '5',
-      name: '王五',
-      age: '53',
-    },
-    {
-      id: '6',
-      name: '赵六',
-      age: '53',
-    },
-  ];
-  if (params.age || params.name) {
-    data = data.filter(
-      (t) => t.age.includes(params.age) || t.name.includes(params.name)
-    );
-  }
-  let new_data = data.slice(
-    (params.pageIndex - 1) * params.pageSize,
-    params.pageIndex * params.pageSize
-  );
-  return Promise.resolve({
-    code: 200,
-    total: data.length,
-    pageIndex: params.pageIndex,
-    pageSize: params.pageSize,
-    data: new_data,
-  });
-};
 
 const onSelectRowsChange = (selectedRows) => {
   console.log(selectedRows);
