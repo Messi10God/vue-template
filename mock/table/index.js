@@ -1,35 +1,13 @@
-const users = [
-  {
-    id: '1',
-    name: '黄乘车你',
-    age: '27',
-  },
-  {
-    id: '2',
-    name: '小吖',
-    age: '21',
-  },
-  {
-    id: '3',
-    name: '张三',
-    age: '53',
-  },
-  {
-    id: '4',
-    name: '李四',
-    age: '53',
-  },
-  {
-    id: '5',
-    name: '王五',
-    age: '53',
-  },
-  {
-    id: '6',
-    name: '赵六',
-    age: '53',
-  },
-];
+const Mock = require('mockjs')
+
+const users = [];
+for(let i = 0;i < 20;i++) {
+  users.push(Mock.mock({
+    id: '@id',
+    name: '@cname',
+    'age|10-100': 100
+  }))
+}
 
 module.exports = [
   {
