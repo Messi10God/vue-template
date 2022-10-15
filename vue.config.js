@@ -25,7 +25,7 @@ module.exports = defineConfig({
     // 全局less文件
     "style-resources-loader": {
       preProcessor: "less",
-      patterns: [path.resolve(__dirname, 'src/assets/less/common.less')],
+      patterns: [path.resolve(__dirname, 'src/assets/less/common.less'), path.resolve(__dirname, 'src/assets/less/transition.less')],
     },
   },
   transpileDependencies: true,

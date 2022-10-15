@@ -23,12 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, inject } from 'vue';
 import { Tag, routeTagsStore } from '@/store/routerTags';
 import { useRoute } from 'vue-router';
 import router from '@/router/index';
 import ContextMenu from '@/components/context-menu/index.vue';
 import type ContextMenuType from '@/components/context-menu/index.vue';
+import { reloadType } from '@/components/typing';
 
 const route = useRoute();
 /** 获取已打开页面列表及操作 */
@@ -36,6 +37,9 @@ const routeTags = routeTagsStore();
 
 /** 获取所有页面 */
 const routes = router.getRoutes();
+
+/** 获取页面刷新方法 */
+const reload = inject(reloadType);
 
 /** 获取当前路由信息 */
 const getCurrentRoute = () => {
@@ -106,6 +110,10 @@ const closeAllTag = () => {
 
 const visible = ref<boolean>(false);
 const data = ref([
+  {
+    title: '刷新当前页面',
+    event: () => reload(),
+  },
   {
     title: '关闭当前标签',
     event: () => closeCurrentTag(clickedTag.value as Tag),

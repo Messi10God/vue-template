@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import Layout from '@/components/layout/index.vue';
-import { RouterView } from 'vue-router';
+import Main from '@/components/layout//Main/index.vue';
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -36,7 +36,7 @@ export const routes: RouteRecordRaw[] = [
         meta: {
           title: '表格',
         },
-        component: RouterView,
+        component: Main,
         children: [
           {
             path: '/table/normalTable',
