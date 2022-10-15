@@ -13,7 +13,7 @@ export const useThemeConfig = defineStore('themeConfig', {
       this.themeConfig = { ...this.themeConfig, ...config };
       sessionStorage.setItem('themeConfig', JSON.stringify(this.themeConfig));
     },
-    clearToken() {
+    clearConfig() {
       sessionStorage.removeItem('themeConfig');
       this.themeConfig = defaultConfig;
     },
