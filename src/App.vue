@@ -1,19 +1,30 @@
 <template>
-  <a-config-provider :locale="zh_CN">
+  <a-config-provider :locale="isCN ? zh_CN : en_US">
     <router-view></router-view>
   </a-config-provider>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import zh_CN from 'ant-design-vue/lib/locale/zh_CN';
+import en_US from 'ant-design-vue/lib/locale/en_US';
+import { useThemeConfig } from '@/store/themeConfig';
 
 export default defineComponent({
   name: 'App',
   components: {},
   setup() {
+    const themeConfigStore = useThemeConfig();
+
+    /** 当前是否是中文 */
+    const isCN = computed(() => {
+      return themeConfigStore.themeConfig.lang === 'zh';
+    });
+
     return {
       zh_CN,
+      en_US,
+      isCN,
     };
   },
 });
@@ -26,6 +37,7 @@ export default defineComponent({
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 /*滚动条整体样式,一般只设置(竖直滚动条)宽度,和(水平)高度*/
 ::-webkit-scrollbar {
   width: 6px;
