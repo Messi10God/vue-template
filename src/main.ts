@@ -7,6 +7,8 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import directives from '@/directives';
 import SvgIcon from '@/components/svg-icon/index.vue';
+import themePluginConfig from '../configs/themePluginConfig';
+import themeColor from '@/components/theme-color/themeColor.js';
 
 const app = createApp(App);
 
@@ -20,6 +22,15 @@ requireAll(req);
 
 const pinia = createPinia();
 
-console.log(process.env.VUE_APP_TEXT);
+/** 主题色相关start */
 
+/** 获取缓存中的primaryColor，缓存存在时设置缓存中的颜色 */
+const themeConfig = sessionStorage.getItem('themeConfig');
+if (themeConfig) {
+  const themeConfigObj = JSON.parse(themeConfig);
+  themeColor.changeColor(themeConfigObj.primaryColor);
+}
+
+window.umi_plugin_ant_themeVar = themePluginConfig.theme;
+/** 主题色相关end */
 app.use(pinia).use(router).use(Antd).use(i18n).use(directives).mount('#app');

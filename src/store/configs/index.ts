@@ -4,6 +4,7 @@ export interface Config {
   sideBarWidth: number;
   headerHeight: number;
   lang: string;
+  primaryColor: string;
 }
 
 export const defaultConfig: Config = {
@@ -11,6 +12,7 @@ export const defaultConfig: Config = {
   sideBarWidth: 200,
   headerHeight: 64,
   lang: 'zh',
+  primaryColor: '#1890FF',
 };
 
 export const LangEnum = {

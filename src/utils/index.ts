@@ -35,3 +35,19 @@ export function isObjEqual(obj1: AnyObject, obj2: AnyObject) {
 export function formatNumber(num: string | number) {
   return num.toString().replace(/(\d)(?=(?:\d{3}[+]?)+$)/g, '$1,');
 }
+
+/** 通过key获取缓存中的值，主要用来处理值应为对象的缓存 */
+export function getValueByStorageKey(key: string, type = 'session') {
+  if (!key) return '';
+  const storage = type === 'session' ? sessionStorage : localStorage;
+  const value = storage.getItem(key);
+  if (value) {
+    if (typeof JSON.parse(value) === 'object') {
+      return JSON.parse(value);
+    } else {
+      return {};
+    }
+  } else {
+    return '';
+  }
+}

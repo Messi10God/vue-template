@@ -8,6 +8,9 @@
       <a-form-item label="侧边栏宽度">
         <a-slider v-model:value="sideBarWidth" :min="150" :max="250" />
       </a-form-item>
+      <a-form-item label="主题色">
+        <ThemeColor></ThemeColor>
+      </a-form-item>
     </a-form>
   </a-drawer>
 </template>
@@ -16,6 +19,7 @@
 import { ref, computed } from 'vue';
 import { SettingOutlined } from '@ant-design/icons-vue';
 import { useThemeConfig } from '@/store/themeConfig';
+import ThemeColor from '@/components/theme-color/index.vue';
 
 const themeConfigStore = useThemeConfig();
 

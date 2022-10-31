@@ -1,5 +1,6 @@
 const path = require("path");
 const { defineConfig } = require("@vue/cli-service");
+const createThemeColorReplacerPlugin = require('./configs/plugin.config')
 
 module.exports = defineConfig({
   devServer: {
@@ -38,7 +39,8 @@ module.exports = defineConfig({
     },
     externals: {
       echarts: 'echarts'
-    }
+    },
+    plugins: [createThemeColorReplacerPlugin()]
   },
   chainWebpack(config) {
     config.module
