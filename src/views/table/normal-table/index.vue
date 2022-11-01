@@ -12,6 +12,11 @@
         </a-form>
       </template>
       <template #bodyCell="{ record, column }">
+        <template v-if="column.dataIndex === 'id'">
+          <div>
+            {{ record.id }}<CopyOutlined class="pointer" v-copy="record.id" />
+          </div>
+        </template>
         <template v-if="column.dataIndex === 'name'">
           <a-tag>{{ record.name }}</a-tag>
         </template>
@@ -27,6 +32,7 @@
 import Table from '@/components/table/index.vue';
 import { ref, reactive } from 'vue';
 import { getUsers } from '@/api/table';
+import { CopyOutlined } from '@ant-design/icons-vue';
 
 const query = reactive({
   name: undefined,
@@ -34,6 +40,10 @@ const query = reactive({
 });
 
 const columns = ref([
+  {
+    title: 'id',
+    dataIndex: 'id',
+  },
   {
     title: '名字',
     dataIndex: 'name',
