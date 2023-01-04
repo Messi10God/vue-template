@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
-import { tokenStore } from '@/store/token';
-const { token } = tokenStore();
+import { useToken } from '@/store/token';
+const { token } = useToken();
 
 const isMock = true;
 

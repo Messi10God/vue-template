@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, inject } from 'vue';
-import { Tag, routeTagsStore } from '@/store/routerTags';
+import { Tag, useRouteTags } from '@/store/routerTags';
 import { useRoute } from 'vue-router';
 import router from '@/router/index';
 import ContextMenu from '@/components/context-menu/index.vue';
@@ -33,7 +33,7 @@ import { reloadType } from '@/components/typing';
 
 const route = useRoute();
 /** 获取已打开页面列表及操作 */
-const routeTags = routeTagsStore();
+const routeTagsStore = useRouteTags();
 
 /** 获取所有页面 */
 const routes = router.getRoutes();
@@ -48,7 +48,7 @@ const getCurrentRoute = () => {
 };
 const currentRoute = getCurrentRoute()!;
 /**  */
-routeTags.addTag({
+routeTagsStore.addTag({
   name: currentRoute.name as string,
   path: currentRoute.path,
   meta: currentRoute.meta,
@@ -56,7 +56,7 @@ routeTags.addTag({
 
 /** 标签列表 */
 const visitedTags = computed(() => {
-  return routeTags.tags;
+  return routeTagsStore.tags;
 });
 
 /** 当前页面的标签 */
@@ -68,7 +68,7 @@ const activeTag = computed(() => {
 router.beforeEach((to) => {
   /** 如果不存在，则添加 */
   if (!visitedTags.value.some((t) => t.name === to.name)) {
-    routeTags.addTag(to);
+    routeTagsStore.addTag(to);
   }
 });
 
@@ -91,7 +91,7 @@ const toLastTag = () => {
 const closeCurrentTag = (tag: Tag) => {
   /** 保存当前页面的name，删除后activeTag.value会为undefined */
   const activeName = activeTag.value?.name;
-  routeTags.clearCurrentTag(tag);
+  routeTagsStore.clearCurrentTag(tag);
   /** 如果关闭的是当前激活页，则跳转到最后一个标签的页面 */
   if (activeName === tag.name) {
     toLastTag();
@@ -99,12 +99,12 @@ const closeCurrentTag = (tag: Tag) => {
 };
 /** 关闭其他标签 */
 const closeOtherTag = (tag: Tag) => {
-  routeTags.clearOtherTags(tag);
+  routeTagsStore.clearOtherTags(tag);
   toLastTag();
 };
 
 const closeAllTag = () => {
-  routeTags.clearAll();
+  routeTagsStore.clearAll();
   toLastTag();
 };
 

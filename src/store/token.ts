@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-export const tokenStore = defineStore('token', {
+export const useToken = defineStore('token', {
   state: () => ({
     token: sessionStorage.getItem('token') as string,
   }),

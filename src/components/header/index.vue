@@ -45,7 +45,7 @@ import { ref } from 'vue';
 import { DownOutlined } from '@ant-design/icons-vue';
 import type { MenuProps } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
-import { tokenStore } from '@/store/token';
+import { useToken } from '@/store/token';
 import Collapsed from '@/components/header/header-toolbar/Collapsed.vue';
 import FullScreen from '@/components/header/header-toolbar/FullScreen.vue';
 import CodeCore from '@/components/header/header-toolbar/CodeCore.vue';
@@ -54,7 +54,7 @@ import SwitchLang from '@/components/header/header-toolbar/SwitchLang.vue';
 import UserInfo from '@/components/header/header-toolbar/UserInfo.vue';
 import type UserInfoType from '@/components/header/header-toolbar/UserInfo.vue';
 
-const { clearToken } = tokenStore();
+const { clearToken } = useToken();
 const router = useRouter();
 const enum UserOpeartion {
   USER_INFO = '1',

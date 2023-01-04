@@ -17,7 +17,7 @@ const defaultTags: Tag[] = [
     },
   },
 ];
-export const routeTagsStore = defineStore('routeTags', {
+export const useRouteTags = defineStore('routeTags', {
   state: () => ({
     tags: [...defaultTags],
   }),

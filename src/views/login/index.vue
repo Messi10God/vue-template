@@ -36,12 +36,12 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { login, Login } from '@/api/login';
-import { tokenStore } from '@/store/token';
+import { useToken } from '@/store/token';
 import { message } from 'ant-design-vue';
 import { useForm } from 'ant-design-vue/lib/form';
 
 const router = useRouter();
-const { addToken } = tokenStore();
+const { addToken } = useToken();
 const user = ref<Login>({
   userName: '',
   password: '',
