@@ -36,6 +36,7 @@ export default defineComponent({
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  min-width: 1366px;
 }
 
 /*滚动条整体样式,一般只设置(竖直滚动条)宽度,和(水平)高度*/

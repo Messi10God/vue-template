@@ -16,11 +16,13 @@
       >
         <SideBar></SideBar
       ></a-layout-sider>
-      <a-layout>
-        <PageTags></PageTags>
-        <Breadcrumb></Breadcrumb>
-        <a-layout-content class="content">
-          <l-main v-if="isReload"></l-main>
+      <a-layout class="content">
+        <a-layout-content>
+          <PageTags></PageTags>
+          <Breadcrumb></Breadcrumb>
+          <div class="container">
+            <l-main v-if="isReload"></l-main>
+          </div>
         </a-layout-content>
       </a-layout>
     </a-layout>
@@ -56,11 +58,12 @@ provide(reloadType, reload);
 
 <style scoped lang="less">
 .main {
-  height: 100vh;
+  // 100%和100vh的区别在于有横向滚动条的时候，100vh会出现竖向滚动条，因为100vh的高度是不包含滚动条高度的
+  height: 100%;
   .header {
     background: #fff;
   }
-  .content {
+  .container {
     margin: 10px 20px;
     // background: #fff;
     // border-radius: 10px;

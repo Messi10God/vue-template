@@ -144,7 +144,10 @@ onMounted(() => {});
 <style scoped lang="less">
 .tags {
   background: #fff;
-  padding: 10px 20px;
+  padding: 0 20px;
+  height: 48px;
+  display: flex;
+  align-items: center;
   overflow-x: auto;
   position: relative;
   .tag {
