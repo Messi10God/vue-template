@@ -13,7 +13,7 @@
       </template>
       <template #bodyCell="{ record, column }">
         <template v-if="column.dataIndex === 'id'">
-          <div>
+          <div class="cell">
             {{ record.id }}<CopyOutlined class="pointer" v-copy="record.id" />
           </div>
         </template>
@@ -55,4 +55,15 @@ const columns = ref([
 ]);
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.pointer {
+  display: none;
+  margin-left: 8px;
+  &:hover {
+    color: #226fff;
+  }
+}
+.cell:hover .pointer {
+  display: inline-block;
+}
+</style>
