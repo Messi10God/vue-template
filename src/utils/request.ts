@@ -1,5 +1,7 @@
 import axios from 'axios';
-import type { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
+import type { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { addPendingRequest, removePendingRequest } from '@/requestUtil/cancelRepeatRquest';
+import { againRequest } from '@/requestUtil/againRequest';
 import { useToken } from '@/store/token';
 const { token } = useToken();
 
@@ -11,7 +13,9 @@ const api = axios.create({
   timeout: 200000,
 });
 const requestHandle = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  (config.headers as AxiosRequestHeaders)['Authorization'] = token;
+  config.headers['Authorization'] = token;
+
+  addPendingRequest(config);
   return config;
 };
 
@@ -23,12 +27,18 @@ api.interceptors.request.use(requestHandle, function (error) {
 
 // 添加响应拦截器
 api.interceptors.response.use(
-  function (response) {
-    console.log(response);
+  function (response: AxiosResponse) {
     // 对响应数据做点什么
+    removePendingRequest(response);
     return response.data;
   },
-  function (error) {
+  function (error: AxiosError) {
+    removePendingRequest(error);
+      // 需要特殊处理请求被取消的情况
+      if (!axios.isCancel(error)) {
+        // 请求重发
+        return againRequest(error, axios);
+    }
     // 对响应错误做点什么
     return Promise.reject(error);
   }
