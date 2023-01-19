@@ -1,18 +1,6 @@
 <template>
-  <div class="tags">
+  <div class="tags" :style="{ '--height': TAGS_LIST_HEIGHT + 'px' }">
     <a-space>
-      <!-- <a-tag
-        class="tag"
-        v-for="item in visitedTags"
-        :key="item.name"
-        :color="activeTag?.name === item.name ? '#F50' : '#108ee9'"
-        :closable="item.name !== 'Home'"
-        @close="() => closeCurrentTag(item)"
-        @click="toPage(item)"
-        @contextmenu="(e) => showMenu(e, item)"
-      >
-        {{ item.meta?.title }}
-      </a-tag> -->
       <div
         class="tag"
         v-for="item in visitedTags"
@@ -54,6 +42,8 @@ import { CloseOutlined, ReloadOutlined } from '@ant-design/icons-vue';
 
 const route = useRoute();
 const router = useRouter();
+
+const TAGS_LIST_HEIGHT = ref(48);
 /** 获取已打开页面列表及操作 */
 const routeTagsStore = useRouteTags();
 
@@ -160,7 +150,8 @@ const contextMenu = ref<InstanceType<typeof ContextMenuType>>();
 const showMenu = (e: MouseEvent, tag: Tag) => {
   e.preventDefault();
   clickedTag.value = tag;
-  contextMenu.value?.setCoordinate(e.pageX, e.pageY);
+  console.log(e);
+  contextMenu.value?.setCoordinate(e.pageX, e.pageY - TAGS_LIST_HEIGHT.value);
 };
 
 onMounted(() => {});
@@ -170,11 +161,11 @@ onMounted(() => {});
 .tags {
   background: #f0f2f5;
   padding: 0 20px;
-  height: 48px;
+  height: var(--height);
   display: flex;
   align-items: center;
-  overflow-x: auto;
   position: relative;
+  overflow-x: auto;
   .tag {
     cursor: pointer;
     height: 40px;
