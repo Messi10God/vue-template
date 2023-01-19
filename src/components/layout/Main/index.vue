@@ -8,7 +8,6 @@
         <component :is="Component" :key="route.path" v-else />
       </transition>
     </router-view>
-    <u-theme />
   </section>
 </template>
 

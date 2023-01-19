@@ -43,6 +43,7 @@ const columns = ref([
   {
     title: 'id',
     dataIndex: 'id',
+    width: '50%'
   },
   {
     title: '名字',

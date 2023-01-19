@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <a-space>
-      <a-tag
+      <!-- <a-tag
         class="tag"
         v-for="item in visitedTags"
         :key="item.name"
@@ -12,7 +12,28 @@
         @contextmenu="(e) => showMenu(e, item)"
       >
         {{ item.meta?.title }}
-      </a-tag>
+      </a-tag> -->
+      <div
+        class="tag"
+        v-for="item in visitedTags"
+        :key="item.name"
+        @click="toPage(item)"
+        @contextmenu="(e) => showMenu(e, item)"
+      >
+        <ReloadOutlined
+          @click.stop="reload"
+          :class="{ actived: activeTag.name === item.name }"
+        />
+        <span
+          class="tag-title"
+          :class="{ actived: activeTag.name === item.name }"
+          >{{ item.meta?.title }}</span
+        >
+        <CloseOutlined
+          @click.stop="closeCurrentTag(item)"
+          v-if="item.name !== 'Home'"
+        />
+      </div>
     </a-space>
   </div>
   <ContextMenu
@@ -25,13 +46,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, inject } from 'vue';
 import { Tag, useRouteTags } from '@/store/routerTags';
-import { useRoute } from 'vue-router';
-import router from '@/router/index';
+import { useRoute, useRouter } from 'vue-router';
 import ContextMenu from '@/components/context-menu/index.vue';
 import type ContextMenuType from '@/components/context-menu/index.vue';
 import { reloadType } from '@/components/typing';
+import { CloseOutlined, ReloadOutlined } from '@ant-design/icons-vue';
 
 const route = useRoute();
+const router = useRouter();
 /** 获取已打开页面列表及操作 */
 const routeTagsStore = useRouteTags();
 
@@ -62,7 +84,8 @@ const visitedTags = computed(() => {
 /** 当前页面的标签 */
 const activeTag = computed(() => {
   const name = route.name;
-  return visitedTags.value.find((t) => t.name === name);
+  /** 关闭后会导致值未undefined，为了不报错做兼容 */
+  return visitedTags.value.find((t) => t.name === name) || ({} as Tag);
 });
 
 router.beforeEach((to) => {
@@ -89,6 +112,8 @@ const toLastTag = () => {
 };
 /** 关闭当前标签 */
 const closeCurrentTag = (tag: Tag) => {
+  // eslint-disable-next-line no-debugger
+  // debugger;
   /** 保存当前页面的name，删除后activeTag.value会为undefined */
   const activeName = activeTag.value?.name;
   routeTagsStore.clearCurrentTag(tag);
@@ -132,7 +157,7 @@ const data = ref([
 const clickedTag = ref<Tag>();
 const contextMenu = ref<InstanceType<typeof ContextMenuType>>();
 /** 鼠标右键事件，显示自定义右键菜单 */
-const showMenu = (e: PointerEvent, tag: Tag) => {
+const showMenu = (e: MouseEvent, tag: Tag) => {
   e.preventDefault();
   clickedTag.value = tag;
   contextMenu.value?.setCoordinate(e.pageX, e.pageY);
@@ -143,7 +168,7 @@ onMounted(() => {});
 
 <style scoped lang="less">
 .tags {
-  background: #fff;
+  background: #f0f2f5;
   padding: 0 20px;
   height: 48px;
   display: flex;
@@ -152,6 +177,17 @@ onMounted(() => {});
   position: relative;
   .tag {
     cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 8px;
+    border-radius: 4px;
+    background: #fff;
+    .tag-title {
+      margin: 0 6px 0 8px;
+    }
+  }
+  .actived {
+    color: #1890ff;
   }
 }
 </style>
