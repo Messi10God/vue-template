@@ -62,7 +62,7 @@ const onSelectRowsChange = (selectedRows) => {
 
 const router = useRouter();
 const doAdd = () => {
-  router.push('/table/selectTable/add');
+  router.push('/table/selectTable/add?type=1&po=2');
 };
 </script>
 

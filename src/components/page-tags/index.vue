@@ -10,6 +10,7 @@
       >
         <ReloadOutlined
           @click.stop="reload"
+          v-if="activeTag.name === item.name"
           :class="{ actived: activeTag.name === item.name }"
         />
         <span
@@ -60,11 +61,7 @@ const getCurrentRoute = () => {
 };
 const currentRoute = getCurrentRoute()!;
 /**  */
-routeTagsStore.addTag({
-  name: currentRoute.name as string,
-  path: currentRoute.path,
-  meta: currentRoute.meta,
-});
+routeTagsStore.addTag(currentRoute);
 
 /** 标签列表 */
 const visitedTags = computed(() => {
@@ -92,13 +89,13 @@ const toPage = (tag: Tag) => {
   if (activeName === tag.name) {
     return;
   }
-  router.push(tag.path);
+  router.push(tag);
 };
 /** 打开最后一个标签的页面 */
 const toLastTag = () => {
   /** 获取最后一个标签 */
   const toLastTag = visitedTags.value.slice(-1)[0];
-  router.replace(toLastTag.path);
+  router.replace(toLastTag);
 };
 /** 关闭当前标签 */
 const closeCurrentTag = (tag: Tag) => {

@@ -5,6 +5,7 @@ interface RouterTags {
   path: string;
   name: RouteRecordName;
   meta: any;
+  query?: any;
 }
 
 export type Tag = RouterTags | RouteLocationNormalized;

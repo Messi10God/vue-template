@@ -59,7 +59,7 @@ export const routes: RouteRecordRaw[] = [
             name: 'Table.SelectTable.Add',
             meta: {
               hidden: true,
-              title: '新增',
+              title: '选择表格新增',
             },
             component: () => import('@/views/table/select-table/add/index.vue'),
           },
