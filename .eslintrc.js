@@ -14,6 +14,7 @@ module.exports = {
     ecmaVersion: 2020
   },
   rules: {
+    'no-debugger': 0,
     'vue/multi-word-component-names': 0,
     "@typescript-eslint/no-explicit-any": [0],
     "@typescript-eslint/no-empty-function": [0],
