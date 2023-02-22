@@ -73,6 +73,14 @@ export const routes: RouteRecordRaw[] = [
         },
         component: () => import('@/views/virtual-list/index.vue'),
       },
+      {
+        path: '/sessionTest',
+        name: 'sessionTest',
+        meta: {
+          title: '自定义缓存测试',
+        },
+        component: () => import('@/views/session/index.vue'),
+      }
     ],
   },
 ];
